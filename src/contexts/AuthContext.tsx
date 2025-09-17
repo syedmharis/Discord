@@ -1,41 +1,31 @@
-import { Auth, API, graphqlOperation } from "aws-amplify";
+// import { Auth, API, graphqlOperation } from "aws-amplify";
 import { createContext, useState, useContext, useEffect } from "react";
-import { getStreamToken } from "../graphql/queries";
-import { Alert } from "react-native";
+// import { getStreamToken } from "../graphql/queries";
+// import { Alert } from "react-native";
 
 const AuthContext = createContext({
-  userId: null,
+  userId: null as string | null,
   setUserId: (newId: string) => {},
 });
 
 const AuthContextComponent = ({ children, client }) => {
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("demo-user");
 
   const connectStreamChatUser = async () => {
-    const userData = await Auth.currentAuthenticatedUser();
-    const { sub, email } = userData.attributes;
+    // Mock user data for UI testing
+    const mockUser = {
+      id: "demo-user",
+      name: "Demo User",
+      image: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
+    };
 
-    const tokenResponse = await API.graphql(graphqlOperation(getStreamToken));
-    const token = tokenResponse?.data?.getStreamToken;
-    if (!token) {
-      Alert.alert("Failed to fetch the token");
-      return;
-    }
+    // For UI testing without backend, we'll skip the actual connection
+    // await client.connectUser(mockUser, "demo-token");
 
-    await client.connectUser(
-      {
-        id: sub,
-        name: email,
-        image:
-          "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png",
-      },
-      token
-    );
+    // const channel = client.channel("livestream", "public", { name: "Public" });
+    // await channel.watch();
 
-    const channel = client.channel("livestream", "public", { name: "Public" });
-    await channel.watch();
-
-    setUserId(sub);
+    setUserId(mockUser.id);
   };
 
   useEffect(() => {

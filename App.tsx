@@ -12,11 +12,11 @@ import { StreamChat } from "stream-chat";
 import { OverlayProvider, Chat, Theme, DeepPartial } from "stream-chat-expo";
 import AuthContext from "./src/contexts/AuthContext";
 import { StreamColors } from "./src/constants/Colors";
-import { Amplify, Auth } from "aws-amplify";
-import { withAuthenticator } from "aws-amplify-react-native";
-import awsconfig from "./src/aws-exports";
+// import { Amplify, Auth } from "aws-amplify";
+// import { withAuthenticator } from "aws-amplify-react-native";
+// import awsconfig from "./src/aws-exports";
 
-Amplify.configure({ ...awsconfig, Analytics: { disabled: true } });
+// Amplify.configure({ ...awsconfig, Analytics: { disabled: true } });
 
 const API_KEY = "tmdq3ta7ah6k";
 const client = StreamChat.getInstance(API_KEY);
@@ -54,4 +54,4 @@ function App() {
   }
 }
 
-export default withAuthenticator(App);
+export default App;
